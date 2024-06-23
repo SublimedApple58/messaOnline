@@ -12,8 +12,10 @@ Route::get('/', function () {
 Route::get('/article/show/{article}', [ArticleController::class, 'show'])->name('article.show');
 
 Route::middleware(['auth'])->group(function() {
+    // i miei articoli
+    Route::get('/article/my_article', [ArticleController::class, 'my_article'])->name('article.my_article');
     // form di creazione
-    Route::get('article/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
     // store dell'articolo
     Route::post('/article/store', [ArticleController::class, 'store'])->name('article.store');
     // edit dell'articolo

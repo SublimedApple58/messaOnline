@@ -29,6 +29,9 @@
                 <button type="sumbit" class="nav-link">Logout</button>
             </form>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('article.my_article')}}">My articles</a>
+          </li>
           @endauth
         </ul>
       </div>

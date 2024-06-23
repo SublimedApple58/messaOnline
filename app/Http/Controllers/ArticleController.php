@@ -96,6 +96,12 @@ class ArticleController extends Controller
         }
     }
 
+    public function my_article(){
+        $articles = Article::where('user_id', Auth::id())->get();
+
+        return view('article.my_article', compact('articles'));
+    }
+
     /**
      * Remove the specified resource from storage.
      */
