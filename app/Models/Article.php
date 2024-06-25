@@ -12,11 +12,21 @@ class Article extends Model
     protected $fillable = [
         'topic',
         'title',
+        'category',
         'content',
-        'img'
+        'img',
+        'category_id'
     ];
 
     public function user(){
         return $this ->belongsTo(User::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function countries(){
+        return $this->belongsToMany(Country::class);
     }
 }

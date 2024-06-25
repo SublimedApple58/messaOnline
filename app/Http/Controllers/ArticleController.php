@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Country;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +26,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('article.create');
+        $categories = Category::all();
+        $countries = Country::all();
+        return view('article.create', compact('categories', 'countries'));
     }
 
     /**
@@ -38,12 +42,15 @@ class ArticleController extends Controller
         }
 
         try{
-            Auth::user()->articles()->create([
-                'topic' => $request->topic,
+            $article = Auth::user()->articles()->create([
                 'title' => $request->title,
+                'category_id' => $request->category,
                 'content' => $request->content,
                 'img' => $img
             ]);
+
+            // metodo attach inserisce nella tabella pivot la relazione tra i due modelli
+            $article->countries()->attach($request->countries);
     
             return redirect(route('homepage'))->with('message', 'articolo aggiungo con successo');
         } catch (Exception $e) {
@@ -65,8 +72,10 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        $categories = Category::all();
+        $countries = Country::all();
         if(Auth::id() === $article->user->id){
-            return view('article.edit', compact('article'));
+            return view('article.edit', compact('article', 'categories', 'countries'));
         } else {
             return redirect(route('homepage'))->with('alert', 'volevi modificare qualcosa di non tuo brutto infame');
         }
@@ -84,11 +93,13 @@ class ArticleController extends Controller
 
         try{
             $article->update([
-                'topic' => $request->topic,
+                'category_id' => $request->category, 
                 'title' => $request->title,
                 'content' => $request->content,
                 'img' => $img
             ]);
+
+            $article->countries()->sync($request->countries);
     
             return redirect(route('article.index'))->with('message', 'articolo modificato con successo');
         } catch (Exception $e){
@@ -107,6 +118,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $article->countries()->detach();
         $article->delete();
 
         return redirect(route('article.index'))->with('message', 'Articolo cancellato con successo');
