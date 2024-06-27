@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,3 +27,7 @@ Route::middleware(['auth'])->group(function() {
 });
 // indice
 Route::get('/article/index', [ArticleController::class, 'index'])->name('article.index');
+
+Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
+Route::get('/comments/index', [CommentController::class, 'index'])->name('comments.create');
+Route::get('/comments/edit/{comment}', [CommentController::class, 'edit'])->name('comments.edit');
