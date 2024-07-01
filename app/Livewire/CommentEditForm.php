@@ -13,6 +13,12 @@ class CommentEditForm extends Component
 
     public $comment;
 
+    protected $rules = [
+        'title' => 'required',
+        'subtitle' => 'required',
+        'body' => 'required'
+    ];
+
     public function mount(){
         $this->title = $this->comment->title;
         $this->subtitle = $this->comment->subtitle;
@@ -20,6 +26,9 @@ class CommentEditForm extends Component
     }
     
     public function editComment(){
+
+        $this->validate();
+
         $this->comment->update([
             'title' => $this->title,
             'subtitle' => $this->subtitle,

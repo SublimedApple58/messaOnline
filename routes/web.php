@@ -29,5 +29,5 @@ Route::middleware(['auth'])->group(function() {
 Route::get('/article/index', [ArticleController::class, 'index'])->name('article.index');
 
 Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
-Route::get('/comments/index', [CommentController::class, 'index'])->name('comments.create');
+Route::get('/comments/index', [CommentController::class, 'index'])->name('comments.index');
 Route::get('/comments/edit/{comment}', [CommentController::class, 'edit'])->name('comments.edit');

@@ -32,6 +32,12 @@
           <li class="nav-item">
             <a class="nav-link" href="{{route('article.my_article')}}">My articles</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('comments.index')}}">Forum commenti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('comments.create')}}">Lascia un commento</a>
+          </li>
           @endauth
         </ul>
       </div>
